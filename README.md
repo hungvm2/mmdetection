@@ -36,7 +36,7 @@ mim install mmcv-full
 **Step 1.** Install MMDetection.
 
 ```shell
-git clone https://github.com/open-mmlab/mmdetection.git
+git clone https://github.com/hungvm2/mmdetection.git
 cd mmdetection
 pip install -v -e .
 # "-v" means verbose, or more output
