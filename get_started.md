@@ -1,23 +1,16 @@
-# Prerequisites
+# Chuẩn bị môi trường: 
 
-In this section we demonstrate how to prepare an environment with PyTorch.
-
-MMDetection works on Linux, Windows and macOS. It requires Python 3.6+, CUDA 9.2+ and PyTorch 1.5+.
-
-```{note}
-If you are experienced with PyTorch and have already installed it, just skip this part and jump to the [next section](#installation). Otherwise, you can follow these steps for the preparation.
-```
 
 **Step 0.** Download and install Miniconda from the [official website](https://docs.conda.io/en/latest/miniconda.html).
 
-**Step 1.** Create a conda environment and activate it.
+**Step 1.** Tạo và kích hoạt môi trường Conda.
 
 ```shell
 conda create --name openmmlab python=3.8 -y
 conda activate openmmlab
 ```
 
-**Step 2.** Install PyTorch following [official instructions](https://pytorch.org/get-started/locally/), e.g.
+**Step 2.** Cài PyTorch: 
 
 On GPU platforms:
 
@@ -31,11 +24,7 @@ On CPU platforms:
 conda install pytorch torchvision cpuonly -c pytorch
 ```
 
-# Installation
-
-We recommend that users follow our best practices to install MMDetection. However, the whole process is highly customizable. See [Customize Installation](#customize-installation) section for more information.
-
-## Best Practices
+# Cài đặt các thư viện của mmlab:
 
 **Step 0.** Install [MMCV](https://github.com/open-mmlab/mmcv) using [MIM](https://github.com/open-mmlab/mim).
 
@@ -46,8 +35,6 @@ mim install mmcv-full
 
 **Step 1.** Install MMDetection.
 
-Case a: If you develop and run mmdet directly, install it from source:
-
 ```shell
 git clone https://github.com/open-mmlab/mmdetection.git
 cd mmdetection
@@ -57,6 +44,9 @@ pip install -v -e .
 # thus any local modifications made to the code will take effect without reinstallation.
 ```
 
+<<<<<<< HEAD
+## Test mô hình Swin Transformer
+=======
 Case b: If you use mmdet as a dependency or third-party package, install it with pip:
 
 ```shell
@@ -93,7 +83,7 @@ from mmdet.apis import init_detector, inference_detector
 config_file = 'yolov3_mobilenetv2_320_300e_coco.py'
 checkpoint_file = 'yolov3_mobilenetv2_320_300e_coco_20210719_215349-d18dff72.pth'
 model = init_detector(config_file, checkpoint_file, device='cpu')  # or device='cuda:0'
-inference_detector(model, 'demo/cat.jpg')
+inference_detector(model, 'demo/demo.jpg')
 ```
 
 You will see a list of arrays printed, indicating the detected bounding boxes.
@@ -187,22 +177,18 @@ Within Jupyter, the exclamation mark `!` is used to call external executables an
 ```
 
 ### Using MMDetection with Docker
+>>>>>>> e71b499608e9c3ccd4211e7c815fa20eeedf18a2
 
-We provide a [Dockerfile](https://github.com/open-mmlab/mmdetection/blob/master/docker/Dockerfile) to build an image. Ensure that your [docker version](https://docs.docker.com/engine/install/) >=19.03.
-
-```shell
-# build an image with PyTorch 1.6, CUDA 10.1
-# If you prefer other versions, just modified the Dockerfile
-docker build -t mmdetection docker/
-```
-
-Run it with
+**Step 1.** Tải file weights và config:
 
 ```shell
-docker run --gpus all --shm-size=8g -it -v {DATA_DIR}:/mmdetection/data mmdetection
+mim download mmdet --config mask_rcnn_swin-t-p4-w7_fpn_ms-crop-3x_coco --dest .
 ```
 
-## Trouble shooting
+**Step 2.** Test mô hình:
 
-If you have some issues during the installation, please first view the [FAQ](faq.md) page.
-You may [open an issue](https://github.com/open-mmlab/mmdetection/issues/new/choose) on GitHub if no solution is found.
+```shell
+python demo/image_demo.py demo/demo.jpg mask_rcnn_swin-t-p4-w7_fpn_ms-crop-3x_coco.py mask_rcnn_swin-t-p4-w7_fpn_ms-crop-3x_coco_20210906_131725-bacf6f7b.pth --device cpu --out-file result.jpg
+```
+
+Xem kết quả trong file `result.jpg`.
